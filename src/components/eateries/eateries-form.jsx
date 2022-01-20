@@ -1,48 +1,43 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Formik } from "formik";
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Alert, Button, Form, FormGroup } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
-import './shelters-form.scss';
+import './eateries-form.scss';
 
-const Shelters = () => {
+const Eateries = () => {
   let { id } = useParams();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
 
   useEffect(() => {
     if (id) {
-      Helpers.getItemDetails('shelters', id, setItems, setIsLoaded);
+      Helpers.getItemDetails('eatery', id, setItems, setIsLoaded);
     } else {
       setIsLoaded(true);
     }
   }, []);
 
-  let initialData = { 
-    name: '', 
-    address: '', 
-    city: '', 
-    zipCode: '', 
-    phone: '', 
-    totalNumberOfBeds: '', 
-    occupiedNumberOfBeds: '' 
-  };
-
   if (isLoaded) {
-    if (id) {
-      const { data } = items;
-      initialData = { ...data };
-    }
+    const { data } = items;
+    const { name, address, city, zipCode, phone, mealsAvailability } = data;
     
     return (
-      <div className="shelters__container-form">
-        { !id ? <h1>Dodaj schronisko</h1> : <h1>Edytuj schronisko</h1> }
+      <div className="eateries__container-form">
+        { !isLoaded ? <h1>Dodaj jadłodajnie</h1> : <h1>Edytuj jadłodajnie</h1> }
         <Formik
-          initialValues={initialData}
+          initialValues={{ 
+            name, 
+            address, 
+            city, 
+            zipCode, 
+            phone,
+            mealsAvailability,
+          }}
           validate={values => {
             const errors = {};
             if (!values.name) {
@@ -61,16 +56,13 @@ const Shelters = () => {
             if (!values.zipCode) {
               errors.zipCode = 'Kod pocztowy jest wymagany!';
             }
-            if (!values.totalNumberOfBeds) {
-              errors.zipCode = 'Musisz wprowadzić dostępną ilość łóżek!';
-            }
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
             if (!id) {
-              Helpers.addItem('shelters', values, setMessage, setErrMessage);
+              Helpers.addItem('eatery', values, setMessage, setErrMessage);
             } else {
-              Helpers.updateItem('shelters', id, values, setMessage, setErrMessage);
+              Helpers.updateItem('eatery', id, values, setMessage, setErrMessage);
             }
             if (!errMessage) {
               setSubmitting(false);
@@ -147,30 +139,18 @@ const Shelters = () => {
                 />
                 {errors.phone && touched.phone && errors.phone}
               </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Liczba dostępnych łóżek:</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="totalNumberOfBeds"
-                  placeholder="Ogólna liczba łóżek dostępnych w schronisku"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.totalNumberOfBeds}
-                />
-                {errors.totalNumberOfBeds && touched.totalNumberOfBeds && errors.totalNumberOfBeds}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Liczba zajętych łóżek:</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="occupiedNumberOfBeds"
-                  placeholder="Liczba łóżek zajętych przez osoby bezdomne"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.occupiedNumberOfBeds}
-                />
-                {errors.occupiedNumberOfBeds && touched.occupiedNumberOfBeds && errors.occupiedNumberOfBeds}
-              </Form.Group>
+              <FormGroup className="mb-3">
+                <Form.Label>Wybierz dostępność posiłków</Form.Label>
+                <Form.Select 
+                  name="mealsAvailability"
+                  onChange={handleChange} 
+                  value={values.mealsAvailability}
+                  defaultChecked={values.mealsAvailability}
+                >
+                  <option value="true">Dostępne</option>
+                  <option value="false">Niedostępne</option>
+                </Form.Select>
+              </FormGroup>
               <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zatwierdź</Button>
             </Form>
           )}
@@ -187,4 +167,4 @@ const Shelters = () => {
   }
 }
 
-export default Shelters;
+export default Eateries;

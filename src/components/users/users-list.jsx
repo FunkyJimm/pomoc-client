@@ -4,40 +4,40 @@ import { Button, Table } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
-const SheltersList = () => {
+const UsersList = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    Helpers.getItems('shelters', setItems, setIsLoaded, setMessage);
+    Helpers.getItems('users', setItems, setIsLoaded, setMessage);
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/shelters/${id}`, { replace: true }, [navigate]);
+    navigate(`/users/${id}`, { replace: true }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/shelters/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/users/form/${id}`, {replace: true}, [navigate]);
   }
 
   const handleDelete = id => {
-    Helpers.deleteItem('shelters', id);
+    console.log(id)
+    Helpers.deleteItem('users', id);
     setIsLoaded(false);
   }
 
   const itemsList = () => {
     return (
-      items.data.map((shelter, index) => (
-        <tr key={shelter.id}>
+      items.data.map((user, index) => (
+        <tr key={user.id}>
           <td>{index + 1}</td>
-          <td>{shelter.name}</td>
-          <td>{shelter.totalNumberOfBeds}</td>
-          <td>{shelter.occupiedNumberOfBeds}</td>
-          <td><Button onClick={() => handleDetails(shelter.id)} variant="outline-primary">Szczegóły</Button></td>
-          <td><Button onClick={() => handleEdit(shelter.id)} variant="outline-secondary">Edycja</Button></td>
-          <td><Button onClick={() => handleDelete(shelter.id)} variant="outline-danger">Usuń</Button></td>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+          <td><Button onClick={() => handleDetails(user.id)} variant="outline-primary">Szczegóły</Button></td>
+          <td><Button onClick={() => handleEdit(user.id)} variant="outline-secondary">Edycja</Button></td>
+          <td><Button onClick={() => handleDelete(user.id)} variant="outline-danger">Usuń</Button></td>
         </tr>
       ))
     )
@@ -57,8 +57,7 @@ const SheltersList = () => {
             <tr>
               <th>#</th>
               <th>Nazwa</th>
-              <th>Ilość wszystkich łóżek</th>
-              <th>Ilość zajętych łóżek</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -70,4 +69,4 @@ const SheltersList = () => {
   }
 }
 
-export default SheltersList;
+export default UsersList;

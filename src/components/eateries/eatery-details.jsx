@@ -1,18 +1,18 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { Button, Table } from 'react-bootstrap'
+import { useParams } from 'react-router-dom';
 
 import config from '../../config/config';
 
-const ShelterDetails = () => {
+const EateryDetails = () => {
   let { id } = useParams();
   const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (id) {
-      axios.get(`${config.API_URL}/shelters/${id}`)
+      axios.get(`${config.API_URL}/eatery/${id}`)
       .then(res => {
         setItems(res.data);
         setIsLoaded(true);
@@ -28,7 +28,7 @@ const ShelterDetails = () => {
     )
   } else {
     const { data } = items;
-    const { name, address, city, zipCode, phone, totalNumberOfBeds, occupiedNumberOfBeds } = data;
+    const { name, address, city, zipCode, phone, mealsAvailability } = data;
 
     return (
       <div>
@@ -40,8 +40,7 @@ const ShelterDetails = () => {
               <th>Miasto</th>
               <th>Kod pocztowy</th>
               <th>Telefon</th>
-              <th>Ilość wszystkich łóżek</th>
-              <th>Ilość zajętych łóżek</th>
+              <th>Ilość dostępnych posiłków</th>
             </tr>
           </thead>
           <tbody>
@@ -51,8 +50,7 @@ const ShelterDetails = () => {
               <td>{city}</td>
               <td>{zipCode}</td>
               <td>{phone}</td>
-              <td>{totalNumberOfBeds}</td>
-              <td>{occupiedNumberOfBeds}</td>
+              <td>{mealsAvailability}</td>
             </tr>
           </tbody>
         </Table>
@@ -61,4 +59,4 @@ const ShelterDetails = () => {
   } 
 }
 
-export default ShelterDetails;
+export default EateryDetails;

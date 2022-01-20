@@ -9,6 +9,10 @@ function App() {
       <h2>Wersja: alpha 0.1</h2>
 
       <Link to="/shelters">Schroniska</Link>
+      <Link to="/eateries">Jadłodajnie</Link>
+      <Link to="/helpcenters">Ośrodki pomocy</Link>
+      <Link to="/informations">Informacje</Link>
+      <Link to="/users">Użytkownicy</Link>
     </div>
   );
 }

@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Formik } from "formik";
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Alert, Button, Form } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
-import './shelters-form.scss';
+import './help-centers-form.scss';
 
-const Shelters = () => {
+const HelpCenters = () => {
   let { id } = useParams();
-  const [items, setItems] = useState();
+  const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
 
   useEffect(() => {
     if (id) {
-      Helpers.getItemDetails('shelters', id, setItems, setIsLoaded);
+      Helpers.getItemDetails('helpcenter', id, setItems, setIsLoaded);
     } else {
       setIsLoaded(true);
     }
@@ -28,8 +28,7 @@ const Shelters = () => {
     city: '', 
     zipCode: '', 
     phone: '', 
-    totalNumberOfBeds: '', 
-    occupiedNumberOfBeds: '' 
+    description: ''
   };
 
   if (isLoaded) {
@@ -39,8 +38,8 @@ const Shelters = () => {
     }
     
     return (
-      <div className="shelters__container-form">
-        { !id ? <h1>Dodaj schronisko</h1> : <h1>Edytuj schronisko</h1> }
+      <div className="helpcenters__container-form">
+        { !id ? <h1>Dodaj ośrodek pomocy</h1> : <h1>Edytuj ośrodek pomocy</h1> }
         <Formik
           initialValues={initialData}
           validate={values => {
@@ -61,16 +60,16 @@ const Shelters = () => {
             if (!values.zipCode) {
               errors.zipCode = 'Kod pocztowy jest wymagany!';
             }
-            if (!values.totalNumberOfBeds) {
-              errors.zipCode = 'Musisz wprowadzić dostępną ilość łóżek!';
+            if (!values.description) {
+              errors.description = 'Opis jest wymagany!';
             }
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
             if (!id) {
-              Helpers.addItem('shelters', values, setMessage, setErrMessage);
+              Helpers.addItem('helpcenter', values, setMessage, setErrMessage);
             } else {
-              Helpers.updateItem('shelters', id, values, setMessage, setErrMessage);
+              Helpers.updateItem('helpcenter', id, values, setMessage, setErrMessage);
             }
             if (!errMessage) {
               setSubmitting(false);
@@ -148,28 +147,16 @@ const Shelters = () => {
                 {errors.phone && touched.phone && errors.phone}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Liczba dostępnych łóżek:</Form.Label>
+                <Form.Label>Opis:</Form.Label>
                 <Form.Control
-                  type="number"
-                  name="totalNumberOfBeds"
-                  placeholder="Ogólna liczba łóżek dostępnych w schronisku"
+                  type="text"
+                  name="description"
+                  placeholder="Opisz krótko czym zajmuje się podany ośrodek pomocy"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.totalNumberOfBeds}
+                  value={values.description}
                 />
-                {errors.totalNumberOfBeds && touched.totalNumberOfBeds && errors.totalNumberOfBeds}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Liczba zajętych łóżek:</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="occupiedNumberOfBeds"
-                  placeholder="Liczba łóżek zajętych przez osoby bezdomne"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.occupiedNumberOfBeds}
-                />
-                {errors.occupiedNumberOfBeds && touched.occupiedNumberOfBeds && errors.occupiedNumberOfBeds}
+                {errors.description && touched.description && errors.description}
               </Form.Group>
               <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zatwierdź</Button>
             </Form>
@@ -187,4 +174,4 @@ const Shelters = () => {
   }
 }
 
-export default Shelters;
+export default HelpCenters;
