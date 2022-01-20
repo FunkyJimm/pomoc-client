@@ -7,8 +7,6 @@ import Helpers from '../../helpers/api-queries';
 
 import './users-form.scss';
 
-// popraw potem importy bo są brzydkie!
-
 const Users = () => {
   let { id } = useParams();
   const [items, setItems] = useState({});
@@ -44,9 +42,9 @@ const Users = () => {
           validate={values => {
             const errors = {};
             if (!values.name) {
-              errors.title = 'Nazwa jest wymagana!';
+              errors.name = 'Nazwa jest wymagana!';
             } else if (values.name.length < 2) {
-              errors.title = 'Nazwa jest za krótka!';
+              errors.name = 'Nazwa jest za krótka!';
             } else if (values.name.length > 16) {
               errors.name = 'Nazwa jest za długa!';
             }

@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
+import { Alert, Button, Form } from 'react-bootstrap';
 
-import Helpers from '../../helpers/registration';
+import Helpers from '../../helpers/session-queries';
 
 const Login = () => {
   const [message, setMessage] = useState('');
+  const [errMessage, setErrMessage] = useState('');
 
   return (
     <div className="login-container">
@@ -14,35 +16,61 @@ const Login = () => {
         validate={values => {
           const errors = {};
           if (!values.name) {
-            errors.name = 'You need to enter a name!';
+            errors.name = 'Wpisz nazwę użytkownika!';
           }
           if (!values.password) {
-            errors.password = 'You need to enter a password!';
+            errors.password = 'Podaj hasło!';
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            if (Helpers.login(values)) {
-              console.log('OK!');
-            };
+        onSubmit={async (values, { setSubmitting }) => {
+          Helpers.login(values, setMessage, setErrMessage);
+          if (!errMessage) {
             setSubmitting(false);
-          }, 400);
+          }
         }}
       >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="name" />
-            <ErrorMessage name="name" component="div" />
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              Zaloguj
-            </button>
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nazwa:</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="Nazwa użytkownika"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+              />
+              {errors.name && touched.name && errors.name}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Hasło:</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Podaj hasło"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {errors.password && touched.password && errors.password}
+            </Form.Group>
+            <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zaloguj</Button>
           </Form>
         )}
       </Formik>
-      {message}
+
+      { message && <Alert variant="success">{message}</Alert> }
+      { errMessage && <Alert variant="danger">{errMessage}</Alert> }
     </div>
   )
 }
