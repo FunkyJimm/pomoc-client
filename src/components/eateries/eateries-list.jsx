@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Table } from 'react-bootstrap';
+import { Alert, Button, Container, Table, Row } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
@@ -15,16 +15,20 @@ const EateriesList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/eatery/${id}`, { replace: true }, [navigate]);
+    navigate(`/eateries/${id}`, { replace: true }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/eatery/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/eateries/form/${id}`, {replace: true}, [navigate]);
   }
 
   const handleDelete = id => {
     Helpers.deleteItem('eatery', id);
     setIsLoaded(false);
+  }
+
+  const handleReturn = () => {
+    navigate(-1);
   }
 
   const itemsList = () => {
@@ -44,26 +48,39 @@ const EateriesList = () => {
 
   if (!isLoaded) {
     return (
-      <div>
-        <p>{ message ? message : 'Wczytywanie...' }</p>
-      </div>
+      <Container fluid>
+        <Row>
+          { message ? <Alert variant="danger">{message}</Alert> : <p>Wczytywanie...</p> }
+        </Row>
+        <Row>
+          { message && <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button> }
+        </Row>
+      </Container>
     )
   } else {
     return (
-      <div>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nazwa</th>
-              <th>Ilość dostępnych posiłków</th>
-            </tr>
-          </thead>
-          <tbody>
-            {itemsList()}
-          </tbody>
-        </Table>
-      </div>
+      <Container fluid>
+        <Row>
+          <h1>Jadłodajnie</h1>
+        </Row>
+        <Row>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nazwa</th>
+                <th>Ilość dostępnych posiłków</th>
+              </tr>
+            </thead>
+            <tbody>
+              {itemsList()}
+            </tbody>
+          </Table>
+        </Row>
+        <Row>
+          <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
+        </Row>
+      </Container>
     )
   }
 }

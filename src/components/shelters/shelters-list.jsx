@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Table } from 'react-bootstrap';
+import { Alert, Button, Container, Table, Row } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
@@ -27,6 +27,10 @@ const SheltersList = () => {
     setIsLoaded(false);
   }
 
+  const handleReturn = () => {
+    navigate(-1);
+  }
+
   const itemsList = () => {
     return (
       items.data.map((shelter, index) => (
@@ -45,27 +49,40 @@ const SheltersList = () => {
 
   if (!isLoaded) {
     return (
-      <div>
-        <p>{ message ? message : 'Wczytywanie...' }</p>
-      </div>
+      <Container fluid>
+        <Row>
+          { message ? <Alert variant="danger">{message}</Alert> : <p>Wczytywanie...</p> }
+        </Row>
+        <Row>
+          { message && <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button> }
+        </Row>
+      </Container>
     )
   } else {
     return (
-      <div>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nazwa</th>
-              <th>Ilość wszystkich łóżek</th>
-              <th>Ilość zajętych łóżek</th>
-            </tr>
-          </thead>
-          <tbody>
-            {itemsList()}
-          </tbody>
-        </Table>
-      </div>
+      <Container fluid>
+        <Row>
+          <h1>Schroniska</h1>
+        </Row>
+        <Row>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nazwa</th>
+                <th>Ilość wszystkich łóżek</th>
+                <th>Ilość zajętych łóżek</th>
+              </tr>
+            </thead>
+            <tbody>
+              {itemsList()}
+            </tbody>
+          </Table>
+        </Row>
+        <Row>
+          <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
+        </Row>
+      </Container>
     )
   }
 }

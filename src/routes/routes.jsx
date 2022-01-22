@@ -37,27 +37,27 @@ const AppRoutes = () => {
         <Route path="/registration" element={<Registration />} />
         {/* Eateries */}
         <Route path="/eateries" element={<EateriesList />} />
-        <Route path="/eatery/:id" element={<EateryDetails />} />
+        <Route path="/eateries/:id" element={<EateryDetails />} />
         <Route path="/eateries/form/" element={<EateriesForm />} />
         <Route path="/eateries/form/:id" element={<EateriesForm />} />
         {/* Help centers */}
         <Route path="/helpcenters" element={<HelpCentersList />} />
-        <Route path="/helpcenter/:id" element={<HelpCenterDetails />} />
+        <Route path="/helpcenters/:id" element={<HelpCenterDetails />} />
         <Route path="/helpcenters/form/" element={<HelpCentersForm />} />
         <Route path="/helpcenters/form/:id" element={<HelpCentersForm />} />
         {/* Informations */}
         <Route path="/informations" element={<InformationsList />} />
-        <Route path="/information/:id" element={<InformationDetails />} />
+        <Route path="/informations/:id" element={<InformationDetails />} />
         <Route path="/informations/form/" element={<InformationsForm />} />
         <Route path="/informations/form/:id" element={<InformationsForm />} />
         {/* Shelters */}
         <Route path="/shelters" element={<SheltersList />} />
-        <Route path="/shelter/:id" element={<ShelterDetails />} />
+        <Route path="/shelters/:id" element={<ShelterDetails />} />
         <Route path="/shelters/form/" element={<SheltersForm />} />
         <Route path="/shelters/form/:id" element={<SheltersForm />} />
         {/* Users */}
         <Route path="/users" element={<UsersList />} />
-        <Route path="/user/:id" element={<UserDetails />} />
+        <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/users/form/" element={<UsersForm />} />
         <Route path="/users/form/:id" element={<UsersForm />} />
       </Routes>

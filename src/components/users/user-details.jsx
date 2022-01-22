@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Alert, Button, Container, Table, Row } from 'react-bootstrap';
 
 import config from '../../config/config';
 
 const UserDetails = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
   const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -18,35 +19,49 @@ const UserDetails = () => {
         setIsLoaded(true);
       })
     }
-  }, []);
+  }, [id]);
+
+  const handleReturn = () => {
+    navigate(-1);
+  }
 
   if (!isLoaded) {
     return (
-      <div>
-        <p>Error</p>
-      </div>
+      <Container fluid>
+        <Row>
+          <Alert variant="danger">Błąd!</Alert>
+        </Row>
+      </Container>
     )
   } else {
     const { data } = items;
     const { name, email } = data;
 
     return (
-      <div>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Tytuł</th>
-              <th>Opis</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{name}</td>
-              <td>{email}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
+      <Container fluid>
+        <Row>
+          <h1>{ name }</h1>
+        </Row>
+        <Row>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Nazwa</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{name}</td>
+                <td>{email}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+        <Row>
+          <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
+        </Row>
+      </Container>
     )
   } 
 }
