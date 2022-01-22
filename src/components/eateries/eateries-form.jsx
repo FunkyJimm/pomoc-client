@@ -22,22 +22,26 @@ const Eateries = () => {
     }
   }, []);
 
+  let initialData = { 
+    name: '', 
+    address: '', 
+    city: '', 
+    zipCode: '', 
+    phone: '', 
+    mealsAvailability: ''
+  };
+
   if (isLoaded) {
-    const { data } = items;
-    const { name, address, city, zipCode, phone, mealsAvailability } = data;
+    if (id) {
+      const { data } = items;
+      initialData = { ...data };
+    }
     
     return (
       <div className="eateries__container-form">
         { !isLoaded ? <h1>Dodaj jadłodajnie</h1> : <h1>Edytuj jadłodajnie</h1> }
         <Formik
-          initialValues={{ 
-            name, 
-            address, 
-            city, 
-            zipCode, 
-            phone,
-            mealsAvailability,
-          }}
+          initialValues={initialData}
           validate={values => {
             const errors = {};
             if (!values.name) {

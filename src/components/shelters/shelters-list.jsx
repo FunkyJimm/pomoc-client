@@ -34,14 +34,14 @@ const SheltersList = () => {
   const itemsList = () => {
     return (
       items.data.map((shelter, index) => (
-        <tr key={shelter.id}>
+        <tr key={shelter.id || shelter._id}>
           <td>{index + 1}</td>
           <td>{shelter.name}</td>
           <td>{shelter.totalNumberOfBeds}</td>
           <td>{shelter.occupiedNumberOfBeds}</td>
-          <td><Button onClick={() => handleDetails(shelter.id)} variant="outline-primary">Szczegóły</Button></td>
-          <td><Button onClick={() => handleEdit(shelter.id)} variant="outline-secondary">Edycja</Button></td>
-          <td><Button onClick={() => handleDelete(shelter.id)} variant="outline-danger">Usuń</Button></td>
+          <td><Button onClick={() => handleDetails(shelter.id || shelter._id)} variant="outline-primary">Szczegóły</Button></td>
+          <td><Button onClick={() => handleEdit(shelter.id || shelter._id)} variant="outline-secondary">Edycja</Button></td>
+          <td><Button onClick={() => handleDelete(shelter.id || shelter._id)} variant="outline-danger">Usuń</Button></td>
         </tr>
       ))
     )

@@ -34,13 +34,13 @@ const EateriesList = () => {
   const itemsList = () => {
     return (
       items.data.map((eatery, index) => (
-        <tr key={eatery.id}>
+        <tr key={eatery.id || eatery._id}>
           <td>{index + 1}</td>
           <td>{eatery.name}</td>
           <td>{eatery.mealsAvailability}</td>
-          <td><Button onClick={() => handleDetails(eatery.id)} variant="outline-primary">Szczegóły</Button></td>
-          <td><Button onClick={() => handleEdit(eatery.id)} variant="outline-secondary">Edycja</Button></td>
-          <td><Button onClick={() => handleDelete(eatery.id)} variant="outline-danger">Usuń</Button></td>
+          <td><Button onClick={() => handleDetails(eatery.id || eatery._id)} variant="outline-primary">Szczegóły</Button></td>
+          <td><Button onClick={() => handleEdit(eatery.id || eatery._id)} variant="outline-secondary">Edycja</Button></td>
+          <td><Button onClick={() => handleDelete(eatery.id || eatery._id)} variant="outline-danger">Usuń</Button></td>
         </tr>
       ))
     )

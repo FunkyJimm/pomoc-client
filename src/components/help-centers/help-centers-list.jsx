@@ -35,13 +35,13 @@ const HelpCentersList = () => {
   const itemsList = () => {
     return (
       items.data.map((helpCenter, index) => (
-        <tr key={helpCenter.id}>
+        <tr key={helpCenter.id || helpCenter._id}>
           <td>{index + 1}</td>
           <td>{helpCenter.name}</td>
           <td>{helpCenter.description}</td>
-          <td><Button onClick={() => handleDetails(helpCenter.id)} variant="outline-primary">Szczegóły</Button></td>
-          <td><Button onClick={() => handleEdit(helpCenter.id)} variant="outline-secondary">Edycja</Button></td>
-          <td><Button onClick={() => handleDelete(helpCenter.id)} variant="outline-danger">Usuń</Button></td>
+          <td><Button onClick={() => handleDetails(helpCenter.id || helpCenter._id)} variant="outline-primary">Szczegóły</Button></td>
+          <td><Button onClick={() => handleEdit(helpCenter.id || helpCenter._id)} variant="outline-secondary">Edycja</Button></td>
+          <td><Button onClick={() => handleDelete(helpCenter.id || helpCenter._id)} variant="outline-danger">Usuń</Button></td>
         </tr>
       ))
     )

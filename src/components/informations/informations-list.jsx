@@ -35,13 +35,13 @@ const InformationsList = () => {
   const itemsList = () => {
     return (
       items.data.map((information, index) => (
-        <tr key={information.id}>
+        <tr key={information.id || information._id}>
           <td>{index + 1}</td>
           <td>{information.title}</td>
           <td>{information.description}</td>
-          <td><Button onClick={() => handleDetails(information.id)} variant="outline-primary">Szczegóły</Button></td>
-          <td><Button onClick={() => handleEdit(information.id)} variant="outline-secondary">Edycja</Button></td>
-          <td><Button onClick={() => handleDelete(information.id)} variant="outline-danger">Usuń</Button></td>
+          <td><Button onClick={() => handleDetails(information.id || information._id)} variant="outline-primary">Szczegóły</Button></td>
+          <td><Button onClick={() => handleEdit(information.id || information._id)} variant="outline-secondary">Edycja</Button></td>
+          <td><Button onClick={() => handleDelete(information.id || information._id)} variant="outline-danger">Usuń</Button></td>
         </tr>
       ))
     )

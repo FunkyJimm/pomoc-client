@@ -23,7 +23,7 @@ function App() {
         <Row className="justify-content-md-center">
           <Col lg="6">
             <h1>Pomoc dla bezdomnego</h1>
-            <h2>Wersja: beta 0.1</h2>
+            <h2>Wersja: beta 0.2</h2>
           </Col>
         </Row>
         <Row className="justify-content-md-center">
