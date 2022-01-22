@@ -15,11 +15,11 @@ const EateriesList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/eateries/${id}`, { replace: true }, [navigate]);
+    navigate(`/eateries/${id}`, { replace: false }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/eateries/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/eateries/form/${id}`, { replace: false }, [navigate]);
   }
 
   const handleDelete = id => {
@@ -28,7 +28,7 @@ const EateriesList = () => {
   }
 
   const handleReturn = () => {
-    navigate(-1);
+    navigate('/', { replace: false }, [navigate]);
   }
 
   const itemsList = () => {

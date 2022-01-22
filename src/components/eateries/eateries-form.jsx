@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { Alert, Button, Form, FormGroup } from 'react-bootstrap';
 
@@ -9,6 +9,7 @@ import './eateries-form.scss';
 
 const Eateries = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
   const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [message, setMessage] = useState('');
@@ -20,7 +21,11 @@ const Eateries = () => {
     } else {
       setIsLoaded(true);
     }
-  }, []);
+  }, [id]);
+
+  const handleReturn = () => {
+    navigate(-1);
+  }
 
   let initialData = { 
     name: '', 
@@ -39,7 +44,7 @@ const Eateries = () => {
     
     return (
       <div className="eateries__container-form">
-        { !isLoaded ? <h1>Dodaj jadłodajnie</h1> : <h1>Edytuj jadłodajnie</h1> }
+        { !id ? <h1>Dodaj jadłodajnie</h1> : <h1>Edytuj jadłodajnie</h1> }
         <Formik
           initialValues={initialData}
           validate={values => {
@@ -156,6 +161,7 @@ const Eateries = () => {
                 </Form.Select>
               </FormGroup>
               <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zatwierdź</Button>
+              <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
             </Form>
           )}
         </Formik>

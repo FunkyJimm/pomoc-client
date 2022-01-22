@@ -31,6 +31,9 @@ const UserDetails = () => {
         <Row>
           <Alert variant="danger">Błąd!</Alert>
         </Row>
+        <Row>
+          <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
+        </Row>
       </Container>
     )
   } else {

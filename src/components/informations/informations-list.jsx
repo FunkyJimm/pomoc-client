@@ -15,11 +15,11 @@ const InformationsList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/informations/${id}`, { replace: true }, [navigate]);
+    navigate(`/informations/${id}`, { replace: false }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/informations/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/informations/form/${id}`, { replace: false }, [navigate]);
   }
 
   const handleDelete = id => {
@@ -29,7 +29,7 @@ const InformationsList = () => {
   }
 
   const handleReturn = () => {
-    navigate(-1);
+    navigate('/', { replace: false }, [navigate]);
   }
 
   const itemsList = () => {

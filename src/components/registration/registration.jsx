@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import { Alert, Form, Button } from 'react-bootstrap';
 
 import Helpers from '../../helpers/api-queries';
 
 const Registration = () => {
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
+
+  const handleReturn = () => {
+    navigate('/');
+  }
 
   return (
     <div className="registration-form">
@@ -94,6 +100,7 @@ const Registration = () => {
               {errors.email && touched.email && errors.email}
             </Form.Group>
             <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zatwierdź</Button>
+            <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
           </Form>
         )}
       </Formik>

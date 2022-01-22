@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { Alert, Button, Form } from 'react-bootstrap';
 
@@ -9,6 +9,7 @@ import './help-centers-form.scss';
 
 const HelpCenters = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
   const [items, setItems] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [message, setMessage] = useState('');
@@ -20,7 +21,11 @@ const HelpCenters = () => {
     } else {
       setIsLoaded(true);
     }
-  }, []);
+  }, [id]);
+
+  const handleReturn = () => {
+    navigate(-1);
+  }
 
   let initialData = { 
     name: '', 
@@ -159,6 +164,7 @@ const HelpCenters = () => {
                 {errors.description && touched.description && errors.description}
               </Form.Group>
               <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zatwierdź</Button>
+              <Button variant="outline-dark" onClick={handleReturn}>Powrót</Button>
             </Form>
           )}
         </Formik>

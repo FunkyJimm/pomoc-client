@@ -15,11 +15,11 @@ const UsersList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/users/${id}`, { replace: true }, [navigate]);
+    navigate(`/users/${id}`, { replace: false }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/users/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/users/form/${id}`, { replace: false }, [navigate]);
   }
 
   const handleDelete = id => {
@@ -29,7 +29,7 @@ const UsersList = () => {
   }
 
   const handleReturn = () => {
-    navigate(-1);
+    navigate('/', { replace: false }, [navigate]);
   }
 
   const itemsList = () => {

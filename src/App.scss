@@ -1,1 +1,33 @@
 @import "~bootstrap/scss/bootstrap";
+
+.app__container {
+  &-body {
+    height: 90vh;
+    text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+
+  &-title {
+    margin-bottom: 5vh;
+    text-align: center;
+
+    h1 {
+      font-size: 60px;
+    }
+  
+    h2 {
+      font-size: 28px;
+    }
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}
+
+.footer {
+  height: 5vh;
+  text-align: center;
+}

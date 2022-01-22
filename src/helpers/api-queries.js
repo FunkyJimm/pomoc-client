@@ -11,7 +11,7 @@ const getItems = async function(endpoint, setItems, setIsLoaded, setMessage) {
     },
     (err) => {
       setIsLoaded(false);
-      setMessage(errorsHandler(err.response.status));
+      err?.response?.status ? setMessage(errorsHandler(err.response.status)) : console.log(err);
     })
 }
 

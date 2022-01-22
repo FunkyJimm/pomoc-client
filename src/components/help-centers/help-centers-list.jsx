@@ -15,11 +15,11 @@ const HelpCentersList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/helpcenters/${id}`, { replace: true }, [navigate]);
+    navigate(`/helpcenters/${id}`, { replace: false }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/helpcenters/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/helpcenters/form/${id}`, { replace: false }, [navigate]);
   }
 
   const handleDelete = id => {
@@ -29,7 +29,7 @@ const HelpCentersList = () => {
 
   const handleReturn = () => {
     console.log('Powrót')
-    navigate(-1);
+    navigate('/', { replace: false }, [navigate]);
   }
 
   const itemsList = () => {

@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
 import { Alert, Button, Form } from 'react-bootstrap';
 
 import Helpers from '../../helpers/session-queries';
 
-const Login = () => {
+const Login = ({ setIsLogged }) => {
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [errMessage, setErrMessage] = useState('');
+
+  const handleRegistration = () => {
+    navigate('/registration', { replace: false }, [navigate]);
+  }
 
   return (
     <div className="login-container">
@@ -24,7 +30,7 @@ const Login = () => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          Helpers.login(values, setMessage, setErrMessage);
+          Helpers.login(values, setMessage, setErrMessage, setIsLogged);
           if (!errMessage) {
             setSubmitting(false);
           }
@@ -65,6 +71,7 @@ const Login = () => {
               {errors.password && touched.password && errors.password}
             </Form.Group>
             <Button variant="outline-primary" type="submit" disabled={isSubmitting}>Zaloguj</Button>
+            <Button onClick={handleRegistration}>Rejestracja</Button>
           </Form>
         )}
       </Formik>

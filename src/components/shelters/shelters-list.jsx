@@ -15,11 +15,11 @@ const SheltersList = () => {
   }, [isLoaded]);
 
   const handleDetails = id => {
-    navigate(`/shelters/${id}`, { replace: true }, [navigate]);
+    navigate(`/shelters/${id}`, { replace: false }, [navigate]);
   }
 
   const handleEdit = id => {
-    navigate(`/shelters/form/${id}`, {replace: true}, [navigate]);
+    navigate(`/shelters/form/${id}`, { replace: false }, [navigate]);
   }
 
   const handleDelete = id => {
@@ -28,7 +28,7 @@ const SheltersList = () => {
   }
 
   const handleReturn = () => {
-    navigate(-1);
+    navigate('/', { replace: false }, [navigate]);
   }
 
   const itemsList = () => {
