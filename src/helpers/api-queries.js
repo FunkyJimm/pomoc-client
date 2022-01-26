@@ -3,6 +3,8 @@ import axios from "axios";
 import config from '../config/config';
 import { errorsHandler } from '../errors/errors-messages';
 
+import { findCoordinates } from "./map-api";
+
 const getItems = async function(endpoint, setItems, setIsLoaded, setMessage) {
   await axios.get(`${config.API_URL}/${endpoint}`)
     .then(res => {
@@ -24,15 +26,20 @@ const getItemDetails = async function(endpoint, id, setItems, setIsLoaded) {
 }
 
 const addItem = async function(endpoint, values, setMessage, setErrMessage) {
+  if (endpoint === 'eatery' || endpoint === 'shelters') {
+    const coordinates = await findCoordinates(values.address, values.city);
+    Object.assign(values, { "coordinates": coordinates });
+  }
+
   await axios.post(`${config.API_URL}/${endpoint}`, values)
-    .then(res => {
-      console.log(res.data.status);
-      setMessage('Wprowadzono pomyślnie!');
-    },
-    (err) => {
-      console.log(err.response.status);
-      setErrMessage(errorsHandler(err.response.status));
-    })
+  .then(res => {
+    console.log(res.data.status);
+    setMessage('Wprowadzono pomyślnie!');
+  },
+  (err) => {
+    console.log(err.response.status);
+    setErrMessage(errorsHandler(err.response.status));
+  })
 }
 
 const updateItem = async function(endpoint, id, values, setMessage, setErrMessage) {

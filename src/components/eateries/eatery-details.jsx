@@ -38,6 +38,7 @@ const EateryDetails = () => {
     )
   } else {
     const { data } = items;
+    console.log(data);
     const { name, address, city, zipCode, phone, mealsAvailability } = data;
 
     return (
@@ -54,17 +55,17 @@ const EateryDetails = () => {
                 <th>Miasto</th>
                 <th>Kod pocztowy</th>
                 <th>Telefon</th>
-                <th>Ilość dostępnych posiłków</th>
+                <th>Dostępność posiłków</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{name}</td>
-                <td>{address}</td>
+                <td>{`${address.street} ${address.house}${address?.apartment && '/' + address?.apartment}`}</td>
                 <td>{city}</td>
                 <td>{zipCode}</td>
                 <td>{phone}</td>
-                <td>{mealsAvailability}</td>
+                <td>{mealsAvailability ? 'Dostępne' : 'Niedostępne'}</td>
               </tr>
             </tbody>
           </Table>

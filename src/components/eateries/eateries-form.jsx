@@ -29,7 +29,11 @@ const Eateries = () => {
 
   let initialData = { 
     name: '', 
-    address: '', 
+    address: {
+      street: '',
+      house: '',
+      apartment: '',
+    }, 
     city: '', 
     zipCode: '', 
     phone: '', 
@@ -56,8 +60,11 @@ const Eateries = () => {
             } else if (values.name.length > 256) {
               errors.name = 'Nazwa jest za długa!';
             }
-            if (!values.address) {
-              errors.address = 'Ulica jest wymagana!';
+            if (!values.address.street) {
+              errors.street = 'Nazwa ulicy jest wymagana!';
+            }
+            if (!values.address.house) {
+              errors.house = 'Numer domu jest wymagany!';
             }
             if (!values.city) {
               errors.city = 'Miasto jest wymagane!';
@@ -101,16 +108,39 @@ const Eateries = () => {
                 {errors.name && touched.name && errors.name}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Adres:</Form.Label>
+                <Form.Label>Ulica:</Form.Label>
                 <Form.Control
                   type="text"
-                  name="address"
-                  placeholder="Nazwa ulicy oraz nr domu i lokalu"
+                  name="address.street"
+                  placeholder="Nazwa ulicy"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.address}
+                  value={values.address?.street}
                 />
-                {errors.address && touched.address && errors.address}
+                {errors.street && touched.street && errors.street}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Numer domu:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address.house"
+                  placeholder="Numer domu"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.address?.house}
+                />
+                {errors.house && touched.house && errors.house}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Numer mieszkania:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address.apartment"
+                  placeholder="Numer mieszkania"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.address?.apartment}
+                />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Miasto:</Form.Label>

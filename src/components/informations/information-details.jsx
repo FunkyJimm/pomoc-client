@@ -38,7 +38,7 @@ const InformationDetails = () => {
     )
   } else {
     const { data } = items;
-    const { title, description } = data;
+    const { title, description, publicationDate } = data;
 
     return (
       <Container fluid>
@@ -51,12 +51,16 @@ const InformationDetails = () => {
               <tr>
                 <th>Tytuł</th>
                 <th>Opis</th>
+                <th>Data utworzenia</th>
+                <th>Data modyfikacji</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{title}</td>
                 <td>{description}</td>
+                <td>{publicationDate}</td>
+                <td>{data?.updateDate}</td>
               </tr>
             </tbody>
           </Table>

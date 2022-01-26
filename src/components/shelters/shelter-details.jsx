@@ -61,7 +61,7 @@ const ShelterDetails = () => {
             <tbody>
               <tr>
                 <td>{name}</td>
-                <td>{address}</td>
+                <td>{`${address.street} ${address.house}${address?.apartment && '/' + address?.apartment}`}</td>
                 <td>{city}</td>
                 <td>{zipCode}</td>
                 <td>{phone}</td>

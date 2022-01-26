@@ -29,7 +29,11 @@ const Shelters = () => {
 
   let initialData = { 
     name: '', 
-    address: '', 
+    address: {
+      street: '',
+      house: '',
+      apartment: '',
+    }, 
     city: '', 
     zipCode: '', 
     phone: '', 
@@ -57,8 +61,11 @@ const Shelters = () => {
             } else if (values.name.length > 256) {
               errors.name = 'Nazwa jest za długa!';
             }
-            if (!values.address) {
-              errors.address = 'Ulica jest wymagana!';
+            if (!values.address.street) {
+              errors.street = 'Nazwa ulicy jest wymagana!';
+            }
+            if (!values.address.house) {
+              errors.house = 'Numer domu jest wymagany!';
             }
             if (!values.city) {
               errors.city = 'Miasto jest wymagane!';
@@ -67,7 +74,7 @@ const Shelters = () => {
               errors.zipCode = 'Kod pocztowy jest wymagany!';
             }
             if (!values.totalNumberOfBeds) {
-              errors.zipCode = 'Musisz wprowadzić dostępną ilość łóżek!';
+              errors.totalNumberOfBeds = 'Musisz wprowadzić dostępną ilość łóżek!';
             }
             return errors;
           }}
@@ -105,16 +112,39 @@ const Shelters = () => {
                 {errors.name && touched.name && errors.name}
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Adres:</Form.Label>
+                <Form.Label>Ulica:</Form.Label>
                 <Form.Control
                   type="text"
-                  name="address"
-                  placeholder="Nazwa ulicy oraz nr domu i lokalu"
+                  name="address.street"
+                  placeholder="Nazwa ulicy"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.address}
+                  value={values.address?.street}
                 />
-                {errors.address && touched.address && errors.address}
+                {errors.street && touched.street && errors.street}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Numer domu:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address.house"
+                  placeholder="Numer domu"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.address?.house}
+                />
+                {errors.house && touched.house && errors.house}
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Numer mieszkania:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address.apartment"
+                  placeholder="Numer mieszkania"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.address?.apartment}
+                />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Miasto:</Form.Label>
@@ -173,6 +203,8 @@ const Shelters = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.occupiedNumberOfBeds}
+                  min="0"
+                  max={values.totalNumberOfBeds}
                 />
                 {errors.occupiedNumberOfBeds && touched.occupiedNumberOfBeds && errors.occupiedNumberOfBeds}
               </Form.Group>
